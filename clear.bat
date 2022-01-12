@@ -14,3 +14,7 @@ for /f "eol=# delims=" %%i in (.gitignore) do (
     )
 )
 endlocal
+
+@REM delete following/followers
+del followers*.txt > NUL 2>&1
+del following*.txt > NUL 2>&1

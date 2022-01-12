@@ -10,5 +10,5 @@ __pycache__/
 test.py
 
 # personal file
-following.txt
-followers.txt
+following_[0-9]*.txt
+followers_[0-9]*.txt
