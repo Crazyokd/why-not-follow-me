@@ -24,9 +24,10 @@ followers_nicknames = []
 following_nicknames = []
 
 def visit(tab:str):
-    response = requests.get(url=f"https://github.com/Crazyokd?tab={tab}",timeout=10,headers=headers,proxies=proxies)
+    url = f"https://github.com/Crazyokd?tab={tab}"
+    response = requests.get(url=url,timeout=10,headers=headers,proxies=proxies)
     if response.status_code == 200:
-        print("visit success")
+        print(f"Successful visit {url}")
         print()
 
     # parse html
@@ -71,12 +72,17 @@ def handle_data(tab:str):
         following_usernames = usernames
 
 
+def print_separator():
+    for i in range(40):
+        print("=",end="=")
+    print()
+
 
 def get_data(tab:str):
     success = False
     while not success:
         try:
-            visit(tab)
+            # visit(tab)
             handle_data(tab)
             success = True
         except requests.exceptions.ReadTimeout:
@@ -93,7 +99,6 @@ def get_data(tab:str):
 
 def get_result():
     # declare global variable
-    global followers_num
     global followers_nicknames
     global followers_usernames
     global following_num
@@ -101,34 +106,30 @@ def get_result():
     global following_usernames
 
     # You follow to the other person and who doesn't follow you
-    print("You follow to the other person and who doesn't follow you:")
-    i = 0
-    while i < following_num:
-        if following_nicknames[i] in followers_nicknames:
-            # remove data
-            following_nicknames.remove(following_nicknames[i])
-            following_usernames.remove(following_usernames[i])
-            followers_nicknames.remove(followers_nicknames[i])
-            followers_usernames.remove(followers_usernames[i])
-            i -= 1
-        else:
-            print(f"[{following_nicknames[i]}](https://github.com/{following_usernames[i]})")
-        following_num -= 1
-        i += 1
-
     print()
+    print("You follow to the other person and who doesn't follow you:\n")
+    i = 0
+    for i in range(following_num):
+        try:
+            index = followers_nicknames.index(following_nicknames[i])
+        except ValueError:
+            print(f"[{following_nicknames[i]}](https://github.com/{following_usernames[i]})")
+        else:
+            followers_nicknames.pop(index)
+            followers_usernames.pop(index)
+        
+
+    print_separator()
 
     # Anothor person follow you and you doesn't follow him/her.
-    print("Anothor person follow you and you doesn't follow him/her:")
+    print("Anothor person follow you and you doesn't follow him/her:\n")
     for i in range(len(followers_nicknames)):
         print(f"[{followers_nicknames[i]}](https://github.com/{followers_usernames[i]})")
 
 def start():
     get_data("followers")
     # print separator
-    for i in range(40):
-        print("=",end="=")
-    print()
+    print_separator()
     get_data("following")
 
     get_result()
@@ -136,4 +137,3 @@ def start():
 if __name__=='__main__':
     # start application
     start()
-    
