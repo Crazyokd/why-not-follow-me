@@ -21,4 +21,4 @@ python3 main.py     # run program
 - [Crazyokd/learn-batcht](https://github.com/Crazyokd/learn-batch)
 
 ## License
-Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
+Distributed under the Apache License 2.0. See [LICENSE](LICENSE) for more information.
