@@ -1,0 +1,14 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# .venv
+.venv/
+
+# test
+test.py
+
+# personal file
+following.txt
+followers.txt
